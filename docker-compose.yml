@@ -1,0 +1,22 @@
+version: '3.8'
+
+services:
+  ollama:
+    image: ollama/ollama:latest
+    container_name: ollama
+    restart: unless-stopped
+    expose:
+      - 11434
+    volumes:
+      - ollama_data:/root/.ollama  # Persist downloaded models between restarts
+    environment:
+      - OLLAMA_MODEL=llama3.2  # Default model to use (can be any model you want)
+
+  slack-bot:
+    build: ./
+    image: slack-bot
+    expose:
+      - 3000
+
+volumes:
+  ollama_data:
