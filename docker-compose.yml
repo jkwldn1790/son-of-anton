@@ -1,22 +1,28 @@
 version: '3.8'
 
+networks:
+  custom-network:  # Define a custom network
+    driver: bridge
+
 services:
   ollama:
-    image: ollama/ollama:latest
+    # build: ./docker/ollama
+    image: ollama/ollama
     container_name: ollama
     restart: unless-stopped
-    expose:
-      - 11434
     volumes:
-      - ollama_data:/root/.ollama  # Persist downloaded models between restarts
+      - /Users/jakewalden/.ollama:/root/.ollama:ro
+    ports:
+      - "11434:11434"
     environment:
       - OLLAMA_MODEL=llama3.2  # Default model to use (can be any model you want)
+    networks:
+      - custom-network
 
   slack-bot:
     build: ./
     image: slack-bot
-    expose:
-      - 3000
-
-volumes:
-  ollama_data:
+    ports:
+      - "5000:5000"
+    networks:
+      - custom-network      

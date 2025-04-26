@@ -3,10 +3,10 @@ import requests
 
 app = Flask(__name__)
 
-url = "http://localhost:11434/api/generate"
+url = "http://ollama:11434/api/generate"
 
 # test
-# curl -X POST http://localhost:3000/prompt \                                                          ] 11:12 PM
+# curl -X POST http://localhost:3000/prompt \
 # -H "Content-Type: application/json" \
 # -d '{"prompt": "What is the capital of France?"}'
 
@@ -35,4 +35,4 @@ def process_prompt():
     return result['response']
 
 if __name__ == "__main__":
-    app.run(debug=True, host="0.0.0.0", port=3000)
+    app.run(debug=True, host="0.0.0.0", port=5000)
